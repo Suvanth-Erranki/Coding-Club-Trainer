@@ -14,8 +14,8 @@ ET = ZoneInfo("America/New_York")
 users = fs.load(fs.USER_TABLE)
 problems = fs.load(fs.PROBLEMS_TABLE)
 used = set(fs.load(fs.OLD_TABLE))
-POST_HOUR = 8
-POST_MINUTE = 37
+POST_HOUR = 9
+POST_MINUTE = 49
 START_DATE = datetime(2025, 5, 29, POST_HOUR, POST_MINUTE, tzinfo=ET)
 # CHANNEL_ID = 1372376410059968592
 # ROLE = 1372376966270812181
@@ -93,7 +93,7 @@ class POTDCog(commands.Cog):
             hard = await cf.randomProb(1400, 1700)
             # f"❌ Error polling Codeforces API."
             if easy is None or medium is None or hard is None:
-                return False, None
+                return False, None, -2
 
             easy_link = easy['problem_url']
             medium_link = medium['problem_url']
@@ -105,7 +105,7 @@ class POTDCog(commands.Cog):
 
         # f"❌ Could not generate 3 unused problems after {tries} tries."
         if not provided:
-            return False, None, -2
+            return False, None, -3
 
         used.add(easy_link)
         used.add(medium_link)
@@ -187,13 +187,14 @@ class POTDCog(commands.Cog):
         problems["idx"] = idx
         fs.save(fs.PROBLEMS_TABLE, problems)
         if idx not in problems:
-            ok, entry = await self.createEntry()
+            ok, entry, status = await self.createEntry()
             if not ok:
                 idx = str(int(problems["idx"]) - 1)
                 problems["idx"] = idx
                 fs.save(fs.PROBLEMS_TABLE, problems)
                 return await PROBLEMS_CHANNEL.send("❌ Error creating new entry.")
             problems[idx] = entry
+            fs.save(fs.PROBLEMS_TABLE, problems)
 
         embed = await self.announcement()
 

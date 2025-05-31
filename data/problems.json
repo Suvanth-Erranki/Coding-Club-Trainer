@@ -1,6 +1,6 @@
 {
-    "idx": "2",
-    "total": "2",
+    "idx": "3",
+    "total": "3",
     "1": {
         "date": "2025-05-29T08:00:00-04:00",
         "levels": {
@@ -34,6 +34,10 @@
                     [
                         "pogparrot",
                         51044000.0
+                    ],
+                    [
+                        "_setty",
+                        141787000.0
                     ]
                 ]
             },
@@ -59,6 +63,10 @@
                     [
                         "pogparrot",
                         51705000.0
+                    ],
+                    [
+                        "_setty",
+                        141820000.0
                     ]
                 ]
             },
@@ -84,6 +92,10 @@
                     [
                         "pogparrot",
                         59460000.0
+                    ],
+                    [
+                        "_setty",
+                        141844000.0
                     ]
                 ]
             }
@@ -110,6 +122,10 @@
                     [
                         "sungodtemple",
                         48123000.0
+                    ],
+                    [
+                        "_setty",
+                        55214000.0
                     ]
                 ]
             },
@@ -131,6 +147,10 @@
                     [
                         "pogparrot",
                         6734000.0
+                    ],
+                    [
+                        "_setty",
+                        55287000.0
                     ]
                 ]
             },
@@ -140,8 +160,29 @@
                     [
                         "pogparrot",
                         4516000.0
+                    ],
+                    [
+                        "_setty",
+                        55327000.0
                     ]
                 ]
+            }
+        }
+    },
+    "3": {
+        "date": "2025-06-01T09:49:00-04:00",
+        "levels": {
+            "Easy": {
+                "url": "https://codeforces.com/contest/1841/problem/B",
+                "solved": []
+            },
+            "Medium": {
+                "url": "https://codeforces.com/contest/2055/problem/C",
+                "solved": []
+            },
+            "Hard": {
+                "url": "https://codeforces.com/contest/1976/problem/C",
+                "solved": []
             }
         }
     }
