@@ -60,6 +60,9 @@ async def checkSub(username: str,contest_id: int, index: str, verdict: str, coun
             return False, -1
         data = await resp.json()
         for sub in data.get("result", []):
+            if sub.get("verdict") is None:
+                continue
+                
             if (sub["problem"]["contestId"] == contest_id and
                 sub["problem"]["index"] == index and
                 sub["verdict"] == verdict):

@@ -127,14 +127,14 @@ class POTDCog(commands.Cog):
     
     @app_commands.guilds(discord.Object(id=GUILD_ID))
     def format_leaderboard(self, top_n: int=None) -> str:
-        officer_usernames = {
-            member.name for member in GUILD.members
-            if any(role.name == OFFICER_ROLE_NAME for role in member.roles)
-        }
+        unlisted_usernames = {"suvanth", "sungodtemple"}
+        for member in GUILD.members:
+            if any(role.name == "tiger" for role in member.roles):
+                unlisted_usernames.add(member.name)
 
         filtered_items = {
             uname: data for uname, data in users.items()
-            if uname not in officer_usernames
+            if uname not in unlisted_usernames
         }
 
         sorted_pairs = sorted(filtered_items.items(), key=lambda kv: int(kv[1]['score']), reverse=True)
