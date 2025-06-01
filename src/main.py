@@ -180,6 +180,13 @@ class POTDCog(commands.Cog):
 
     @tasks.loop(time=time(hour=POST_HOUR, minute=POST_MINUTE, tzinfo=ET))
     async def daily_post(self):
+        
+        now = datetime.now(ET)
+        days_elapsed = (now.date() - START_DATE.date()).days
+        if (days_elapsed % 2) != 0:
+            logging.info("Skipping Today")
+            return
+        
         global problems
         await cf.updateCache()
 
