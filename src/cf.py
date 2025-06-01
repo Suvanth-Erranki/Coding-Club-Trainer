@@ -28,6 +28,7 @@ async def updateCache() -> None:
     api_url = "https://codeforces.com/api/problemset.problems"
     async with sess.get(api_url) as resp:
         if resp.status != 200:
+            logging.error("Unable to update cache - polling Codeforces failed")
             return
         payload = await resp.json()
         cachedProblems = payload["result"]["problems"]
@@ -57,6 +58,7 @@ async def checkSub(username: str,contest_id: int, index: str, verdict: str, coun
     url = f"https://codeforces.com/api/user.status?handle={username}&from=1&count={count}"
     async with sess.get(url) as resp:
         if resp.status != 200:
+            logging.error("Unable to check new submissions - polling Codeforces failed")
             return False, -1
         data = await resp.json()
         for sub in data.get("result", []):

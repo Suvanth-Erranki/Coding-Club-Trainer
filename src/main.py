@@ -113,7 +113,7 @@ class POTDCog(commands.Cog):
         fs.save(fs.OLD_TABLE, used)
 
         entry = {
-            "date": (START_DATE + timedelta(days=int(problems["idx"]))).isoformat(),
+            "date": (START_DATE + timedelta(days=int(problems["idx"] - 1))).isoformat(),
             "levels": {
                 "Easy": {"url": easy_link, "solved": []},
                 "Medium": {"url": medium_link, "solved": []},
@@ -213,6 +213,7 @@ class POTDCog(commands.Cog):
    
     @tasks.loop(minutes=5)
     async def periodic_update(self):
+        logging.info("Checking for new submmissions")
         # Prepare the “now” timestamp for the embed
         timeNow = datetime.now(ET).strftime('%I:%M %p').lstrip('0')
         embed = Embed(
@@ -225,24 +226,19 @@ class POTDCog(commands.Cog):
 
         try:
             max_day = int(problems["idx"])
-            for name in list(users):     # use list(...) in case you modify users mid-loop
+            for name in list(users): 
                 member = member_map.get(name)
                 mention = member.mention if member else name
 
-                # For each day 1..max_day, check if that user still needs to solve any level
                 for i in range(1, max_day + 1):
                     entry_num = str(i)
                     entry = problems[entry_num]
                     entry_date = datetime.fromisoformat(entry["date"])
-                    if entry_date > datetime.now(ET):
-                        # POTD #i is not live yet
-                        continue
 
                     for level, data in entry["levels"].items():
                         url = data["url"]
                         solved_list = data["solved"]
 
-                        # Skip if user already solved this level
                         if any(name == x[0] for x in solved_list):
                             continue
 
@@ -253,7 +249,6 @@ class POTDCog(commands.Cog):
                         if not ret_solved:
                             continue
 
-                        # They *just* solved it. Compute elapsed time.
                         solve_millis = (solved_ts - entry_date.timestamp()) * 1000
                         solve_delta = timedelta(milliseconds=solve_millis)
 
@@ -271,7 +266,6 @@ class POTDCog(commands.Cog):
 
                         formatted_time = " ".join(parts)
 
-                        # Update in-memory data structures
                         problems[entry_num]["levels"][level]["solved"].append((name, solve_millis))
                         users[name]["solved"].append((entry_num, level, solve_millis))
                         users[name]["score"] += 1
@@ -280,7 +274,6 @@ class POTDCog(commands.Cog):
                             f"✅ {mention} has completed POTD #{entry_num} - {level} in {formatted_time}!"
                         )
 
-            # If we found _any_ new solves, save to disk and post them:
             if updates:
                 fs.save(fs.USER_TABLE, users)
                 fs.save(fs.PROBLEMS_TABLE, problems)
@@ -290,11 +283,10 @@ class POTDCog(commands.Cog):
                     embed.add_field(name=emoji, value=text, inline=False)
 
                 await DISCUSSION_CHANNEL.send(embed=embed, allowed_mentions=allowed)
+                logging.info("New submissions were update and message was sent in discussion channel")
 
         except Exception as e:
-            # Log the error—so you can see what went wrong—but still persist state
             logging.exception("Error in periodic_update:")
-            # Even if something blew up, write out whatever was modified so far:
             fs.save(fs.USER_TABLE, users)
             fs.save(fs.PROBLEMS_TABLE, problems)
 
@@ -349,7 +341,7 @@ class POTDCog(commands.Cog):
     async def _add(self, interaction: discord.Interaction, easy_link: str=None, medium_link: str=None, hard_link: str=None):
         await interaction.response.defer()
         async with add_lock:
-            success, entry = await self.createEntry(easy_link, medium_link, hard_link)
+            success, entry, issue = await self.createEntry(easy_link, medium_link, hard_link)
             if success:
                 problems[problems["total"]] = entry; 
                 await interaction.followup.send(f"✅ POTD for next entry, {problems['total']} has been created.")
