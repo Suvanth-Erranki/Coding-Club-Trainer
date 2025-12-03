@@ -1,6 +1,8 @@
 # Problem of the Day Trainer - WWP High School South Coding Club
 
-A fully automated **Problem of the Day (POTD)** system built for High School South Coding Club community. This Discord bot posts new Codeforces problems every other morning, tracks member submissions in real time, and maintains a dynamic leaderboard, requiring no manual intervention or updates from officers.
+A fully automated **Problem of the Day (POTD)** system built for High School South Coding Club community. 
+
+This Discord bot posts new Codeforces problems every other morning, tracks member submissions in real time, and maintains a dynamic leaderboard, requiring no manual alerts from club members or updates from officers (the first version used a Google Spreadsheet to track everything).
 
 Used by 25+ club members, ~2000 interactions over 3 months. 
 
