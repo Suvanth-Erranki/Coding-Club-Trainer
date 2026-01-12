@@ -1,20 +1,16 @@
 # Problem of the Day
 
-A fully automated **Problem of the Day (POTD)** system built to help users improve at algorithmic problems. This Discord bot application posts new Codeforces problems every other morning, tracks member submissions in real time, and maintains a dynamic leaderboard, requiring no manual alerts from club members or updates from officers (the first version used a Google Spreadsheet to track everything).
+A fully automated Problem of the Day (POTD) system built to make learning computer science more engaging and easier to stick with. The Discord bot posts new Codeforces problems every other morning, tracks submissions in real time, and maintains a dynamic leaderboard. By removing manual alerts and officer-managed updates (the first version relied on a Google Spreadsheet), the system lowers the barrier to consistent algorithm practice and participation.
 
 ~1500 community interactions over 3 months.
 
-Newest version of Problem of the Day is hosted on codeforces https://codeforces.com/group/61eWPWXekk/contests.
+Most recently published to Github version: 2025-12-15.
 
 Credits:
 
 - Main author: Suvanth
 - Suggestions and bugfixes: WWP High School South Coding Club officers and members. Thanks!
 - Inspiration taken from existing Discord bots (e.g. Codeforces verification, in particular "Limak#8378" and "geniosity limit exceeded#9608").
-
-Example usage in High School South Coding Club Discord:
-
-<img width="1728" height="999" alt="image" src="https://github.com/user-attachments/assets/1013f131-a5ee-4676-b035-792c0d6fce1d" />
 
 ## Features
 
@@ -23,7 +19,8 @@ Example usage in High School South Coding Club Discord:
 - Problems are randomly selected within rating ranges and guaranteed to be **unique**, avoiding repeats.
 - Officers can also manually create POTDs with `/add`.
 
-<img width="1396" height="982" alt="image" src="https://github.com/user-attachments/assets/65f90e33-76e5-4482-9ca3-5607e0323941" />
+<img width="802" height="696" alt="image" src="https://github.com/user-attachments/assets/42e6517b-0423-4dff-8606-6f6bbd50c8f2" />
+
 
 ### Real-Time Leaderboard
 - Tracks user solves across all POTDs.
